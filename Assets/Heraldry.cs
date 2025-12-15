@@ -481,9 +481,9 @@ public class Heraldry : MonoBehaviour
 		var familyName = royalCrest.familyName;
 		var familyNameScore = 0;
 		Debug.LogFormat("[Heraldry #{0}] Family Name: {1}", moduleId, familyName);
-		Debug.LogFormat("[Heraldry #{0}] Number of letters in family name: {1}", moduleId, familyName.Count(a => !char.IsWhiteSpace(a)));
-		Debug.LogFormat("[Heraldry #{0}] Number of words in family name: {1}", moduleId, familyName.Count(a => char.IsWhiteSpace(a)) + 1);
-		familyNameScore += familyName.Select(a => char.IsWhiteSpace(a) ? -1 : 1).Sum() - 1;
+		Debug.LogFormat("[Heraldry #{0}] Number of letters in family name: {1}", moduleId, familyName.Count(a => !char.IsWhiteSpace(a) && a != '\''));
+		Debug.LogFormat("[Heraldry #{0}] Number of words in family name: {1}", moduleId, familyName.Count(a => char.IsWhiteSpace(a) || a == '\'') + 1);
+		familyNameScore += familyName.Select(a => char.IsWhiteSpace(a) || a == '\'' ? -1 : 1).Sum() - 1;
 		Debug.LogFormat("[Heraldry #{0}] Number of letters in serial number in family name: {1}", moduleId, bomb.GetSerialNumberLetters().Count(x => familyName.ToUpperInvariant().ToArray().Contains(x)));
 		familyNameScore += 4 * bomb.GetSerialNumberLetters().Count(x => familyName.ToUpperInvariant().ToArray().Contains(x));
 		Debug.LogFormat("[Heraldry #{0}] Family Name Score: {1}", moduleId, familyNameScore);
